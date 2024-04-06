@@ -1,6 +1,8 @@
 <?php
 
+namespace app\models;
 require_once '/Users/jadereyes82/homework-9/app/core/config.php'; 
+
 
 class Post {
     private $conn;
