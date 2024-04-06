@@ -1,0 +1,20 @@
+1.
+SQL (Structured Query Language):
+SQL is a standard programming language that is specifically designed to manage and manipulate relational databases. 
+It allows you to perform operations such as querying data, updating data, and managing database structures.
+
+Relational Databases:
+Relational databases are a type of database that stores and provides access to data points that are related to one another. 
+They organize data into tables, which can be linked by defining relationships between them. 
+This structure is a flexible and efficient way of retrieving and manipulating data.
+
+2.
+PDO (PHP Data Objects):
+PDO is a database access layer in PHP that provides a structured method of accessing multiple databases. 
+It abstracts the specifics of database connections and queries, and it enables developers to switch between different databases without changing much of the code.
+PDO supports advanced features like prepared statements and transactions, which enhances security and efficiency.
+
+Prepared Statements:
+Prepared statements are a feature used in database management that allows the execution of the same SQL statement repeatedly with high efficiency. 
+They are very important for security, as they help prevent SQL injection attacks by separating the SQL code from the data values. 
+Prepared statements ensure that user input is treated as data only, not as part of the SQL command, thus mitigating the risk of executing malicious code injected by users.
