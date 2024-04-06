@@ -120,22 +120,22 @@ class PostController
     
 
     public function postsView() {
-        include '../public/assets/views/post/posts-view.html';
+        include '/Users/jadereyes82/homework-9/public/assets/views/post/posts-view.html';
         exit();
     }
 
     public function postsAddView() {
-        include '../public/assets/views/post/posts-add.html';
+        include '/Users/jadereyes82/homework-9/public/assets/views/post/posts-add.html';
         exit();
     }
 
     public function postsDeleteView() {
-        include '../public/assets/views/post/posts-delete.html';
+        include '/Users/jadereyes82/homework-9/public/assets/views/post/posts-delete.html';
         exit();
     }
 
     public function postsUpdateView() {
-        include '../public/assets/views/post/posts-update.html';
+        include '/Users/jadereyes82/homework-9/public/assets/views/post/posts-update.html';
         exit();
     }
 
