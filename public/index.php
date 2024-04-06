@@ -1,12 +1,14 @@
 <?php
-require_once "../app/models/Post.php";
-require_once "../app/controllers/PostController.php";
+require_once "/Users/jadereyes82/homework-9/app/models/Post.php";
+require_once "/Users/jadereyes82/homework-9/app/controllers/PostController.php";
 
 //set our env variables
-$env = parse_ini_file('../.env');
-require '../app/core/config.php';
+$env = parse_ini_file('/Users/jadereyes82/homework-9/.env');
+require '/Users/jadereyes82/homework-9/app/core/config.php';
 
+use app\models\Post;
 use app\controllers\PostController;
+
 
 $uri = strtok($_SERVER["REQUEST_URI"], '?');
 
@@ -64,7 +66,7 @@ if ($uriArray[1] === 'posts-delete-view' && $_SERVER['REQUEST_METHOD'] === 'GET'
     $postController->postsDeleteView();
 }
 
-include '../public/assets/views/notFound.html';
+include '/Users/jadereyes82/homework-9/public/assets/views/notFound.html';
 
 ?>
 
