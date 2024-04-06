@@ -40,30 +40,33 @@ class PostController
         ];
     }
 
-    public function getPosts($id) {
+    public function getPosts($id = null) {
         header("Content-Type: application/json");
+        $postModel = new Post(); 
         if ($id) {
-            //TODO 5-c i: get a post data by id
+            $post = $postModel->findById($id);
+            echo json_encode($post);
         } else {
-            //TODO 5-a: get all posts
+            $posts = $postModel->findAll();
+            echo json_encode($posts);
         }
-
+    
         exit();
     }
+    
 
     public function savePost() {
         $inputData = [
-            'title' => $_POST['title'] ? $_POST['title'] : false,
-            'description' => $_POST['description'] ? $_POST['description'] : false,
+            'title' => $_POST['title'] ?? false,
+            'description' => $_POST['description'] ?? false,
         ];
         $postData = $this->validatePost($inputData);
-
-        //TODO 5-b: save a post
-
+    
+        $postModel = new Post();
+        $postModel->save($postData); 
+    
         http_response_code(200);
-        echo json_encode([
-            'success' => true
-        ]);
+        echo json_encode(['success' => true]);
         exit();
     }
 
@@ -72,39 +75,49 @@ class PostController
             http_response_code(404);
             exit();
         }
-
-        //no built-in super global for PUT
+    
+        // Parse the input data
         parse_str(file_get_contents('php://input'), $_PUT);
-
+    
         $inputData = [
-            'title' => $_PUT['title'] ? $_PUT['title'] : false,
-            'description' => $_PUT['description'] ? $_PUT['description'] : false,
+            'title' => $_PUT['title'] ?? false,
+            'description' => $_PUT['description'] ?? false,
         ];
+        // Validate and sanitize the input data
         $postData = $this->validatePost($inputData);
-
-        //TODO 5-c: update a post
-
-        http_response_code(200);
-        echo json_encode([
-            'success' => true
-        ]);
+    
+        // Include the ID in $postData to indicate an update operation
+        $postData['id'] = $id;
+    
+        $postModel = new Post();
+        // Use the save method for both creating and updating
+        $result = $postModel->save($postData);
+    
+        if ($result) {
+            http_response_code(200);
+            echo json_encode(['success' => true, 'message' => 'Post updated successfully']);
+        } else {
+            // Handle failure (e.g., invalid input, database error)
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => 'Failed to update post']);
+        }
         exit();
     }
-
+    
     public function deletePost($id) {
         if (!$id) {
             http_response_code(404);
             exit();
         }
-
-        //TODO 5-d: delete a post
-
+    
+        $postModel = new Post();
+        $postModel->delete($id);
+    
         http_response_code(200);
-        echo json_encode([
-            'success' => true
-        ]);
+        echo json_encode(['success' => true]);
         exit();
     }
+    
 
     public function postsView() {
         include '../public/assets/views/post/posts-view.html';
