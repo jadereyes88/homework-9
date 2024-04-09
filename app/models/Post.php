@@ -9,21 +9,21 @@ class Post {
 
     public function __construct() {
         try {
-            $this->conn = new PDO("mysql:host=".DBHOST.";dbname=".DBNAME, DBUSER, DBPASS);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
+            $this->conn = new \PDO("mysql:host=".DBHOST.";dbname=".DBNAME, DBUSER, DBPASS);
+            $this->conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        } catch (\PDOException $e) {
             echo "Connection error: " . $e->getMessage();
             exit;
         }
     }
 
     // Method to create a new post
-    public function create($title, $content) {
+    public function create($title, $description) {
         try {
-            $sql = "INSERT INTO posts (title, content) VALUES (:title, :content)";
+            $sql = "INSERT INTO posts (title, description) VALUES (:title, :description)";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':title', $title);
-            $stmt->bindParam(':content', $content);
+            $stmt->bindParam(':description', $description);
             $stmt->execute();
             return $this->conn->lastInsertId(); // Return the ID of the new post
         } catch (PDOException $e) {
@@ -64,11 +64,11 @@ class Post {
         // Check if an ID is set in $postData to determine if we're updating or creating a new post
         if (isset($postData['id']) && !empty($postData['id'])) {
             // Update existing post
-            $sql = "UPDATE posts SET title = :title, content = :content WHERE id = :id";
+            $sql = "UPDATE posts SET title = :title, description = :description WHERE id = :id";
             try {
                 $stmt = $this->conn->prepare($sql);
                 $stmt->bindParam(':title', $postData['title']);
-                $stmt->bindParam(':content', $postData['content']);
+                $stmt->bindParam(':description', $postData['description']);
                 $stmt->bindParam(':id', $postData['id'], PDO::PARAM_INT);
                 $stmt->execute();
                 return $postData['id']; // Return the updated post's ID
@@ -78,11 +78,11 @@ class Post {
             }
         } else {
             // Create new post
-            $sql = "INSERT INTO posts (title, content) VALUES (:title, :content)";
+            $sql = "INSERT INTO posts (title, description) VALUES (:title, :description)";
             try {
                 $stmt = $this->conn->prepare($sql);
                 $stmt->bindParam(':title', $postData['title']);
-                $stmt->bindParam(':content', $postData['content']);
+                $stmt->bindParam(':description', $postData['description']);
                 $stmt->execute();
                 return $this->conn->lastInsertId(); // Return the new post's ID
             } catch (PDOException $e) {
